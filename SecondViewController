@@ -1,0 +1,65 @@
+//
+//  SecondViewController.swift
+//  Event Planner
+//
+//  Created by Dylan Petzer on 2021/02/22.
+//  Copyright © 2021 Dylan Petzer. All rights reserved.
+//
+
+import UIKit
+
+class SecondViewController: UIViewController {
+    
+    @IBOutlet var field: UITextField!
+    
+    @IBOutlet var Picker: UIDatePicker!
+    
+    var Event_Name: String!
+    
+    var Event_Date: Date?
+
+    var Today_Date: Date?
+    
+    var Days : Int?
+    
+    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        Today_Date = Date()// Do any additional setup after loading the view.
+    }
+    
+    @IBAction func didTapSave() {
+        NotificationCenter.default.post(name:  Notification.Name("EventName"), object: field.text)
+        field.text = ""
+        Event_Date = Picker.date
+        //let  diff = daysBetween(Event_Date)
+        
+        
+        // picker.date captures date in the variable
+        dismiss(animated: true, completion: nil)
+    }
+
+    
+   
+
+}
+// Extension used to try get Days between Dates
+public extension Date {
+    
+    func daysBetween(date: Date) -> Int {
+        return Date.daysBetween(start: self, end: date)
+    }
+    
+    static func daysBetween(start: Date, end: Date) -> Int {
+        let calendar = Calendar.current
+        
+        // Replace the hour (time) of both dates with 00:00
+        let date1 = calendar.startOfDay(for: start)
+        let date2 = calendar.startOfDay(for: end)
+        
+        let a = calendar.dateComponents([.day], from: date1, to: date2)
+        return a.value(for: .day)!
+    }
+}
