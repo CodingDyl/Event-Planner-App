@@ -1,0 +1,52 @@
+//
+//  ViewController.swift
+//  Event Planner
+//
+//  Created by Dylan Petzer on 2021/02/22.
+//  Copyright © 2021 Dylan Petzer. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+    
+    @IBOutlet var EventLabel: UILabel!
+    
+    @IBOutlet var DayLabel: UILabel!
+    
+    @IBOutlet var HourLabel: UILabel!
+    
+    @IBOutlet var MinLabel: UILabel!
+    
+    @IBOutlet var SecLabel: UILabel!
+    
+    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(didGetNotification(_:)), name: Notification.Name("EventName"), object: nil)
+    }
+    
+    @objc func didGetNotification(_ notification: Notification){
+        let text = notification.object as! String?
+        EventLabel.text = text
+    }
+    
+    @IBAction func didTapChange() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "second") as! SecondViewController
+        present(vc, animated: true)
+    }
+    
+    @IBAction func clearEvent() {
+        EventLabel.text = "No Event Entered"
+        DayLabel.text = "00"
+        HourLabel.text = "00"
+        MinLabel.text = "00"
+        SecLabel.text = "00"
+    }
+    
+    //timer.invalidate used to stop timer when it reaches the end
+    
+
+
+}
